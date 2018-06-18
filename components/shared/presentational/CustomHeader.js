@@ -1,5 +1,5 @@
 import React from 'react';
-// import styles from './SideMenu.style';
+
 import styles from '../styles'
 import {Text, View, TouchableOpacity} from 'react-native';
 

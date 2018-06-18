@@ -9,12 +9,12 @@ There should be a better way to do it */
 import mockAPI from './mockAPI';
 
 import store from './store';
-import Login from './components/Login';
-import MapWithGeolocation from './components/map/MapWithGeolocation';
-import SideMenu from './components/SideMenu';
-import Help from './components/Help';
-import Settings from './components/Settings';
-import CustomHeader from './components/CustomHeader';
+import ConnectedLogin from './components/login/container/LoginContainer';
+import MapWithGeolocation from './components/map/container/Mapscreen';
+import SideMenu from './components/shared/presentational/SideMenu';
+import Help from './components/help/presentational/Help';
+import Settings from './components/settings/presentational/Settings';
+import CustomHeader from './components/shared/presentational/CustomHeader';
 
 /* Note: entry point for react native must be a class that extends
 React.Component.  Cannot be a dumb component
@@ -64,7 +64,7 @@ const DrawerStack = createDrawerNavigator(
 );
 
 const MainStack = createStackNavigator({
-  Login: { screen: Login },
+  Login: { screen: ConnectedLogin },
   Main: {
     screen: DrawerStack,
     navigationOptions: () => ({header: null})

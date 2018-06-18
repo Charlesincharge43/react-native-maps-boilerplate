@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-
-import Mapscreen from './Mapscreen';
+import React from 'react';
 
 /* Higher order component to enhance wrapped components with geolocation data */
 const withGeolocation = (WrappedComponent) => {
@@ -38,4 +36,4 @@ const withGeolocation = (WrappedComponent) => {
   };
 }
 
-export default withGeolocation(Mapscreen);
+export default withGeolocation;

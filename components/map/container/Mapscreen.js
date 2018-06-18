@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import MapView from 'react-native-maps';
 
-import styles from './styles';
-import Hamburger from './Hamburger';
-import CenterBtn from './CenterBtn';
+import styles from '../styles';
+import Hamburger from '../presentational/Hamburger';
+import CenterBtn from '../presentational/CenterBtn';
+import withGeolocation from '../../shared/hoc/withGeolocation';
 
 /* global navigator */
 /* the global object `navigator `is react-native's built-in geolocation API */
 
-export default class Mapscreen extends Component {
+class Mapscreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -105,3 +106,5 @@ export default class Mapscreen extends Component {
     )
   }
 }
+
+export default withGeolocation(Mapscreen);

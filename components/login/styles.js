@@ -13,19 +13,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 250,
   },
-  sideMenu: {
-    top: 35,
-    flexDirection: 'column',
-  },
-  customHeader: {
-    height: 60,
-    paddingTop: 15,
-    backgroundColor: 'white',
-  },
-  customHeaderBackBtn: {
-    margin: 5,
-  },
-
   colorRed: { color: 'red'},
   colorGreen: { color: 'green'},
   

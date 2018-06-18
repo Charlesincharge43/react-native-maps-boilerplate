@@ -5,11 +5,11 @@ import {
   View } from 'react-native';
 import { connect } from 'react-redux';
 
-import styles from '../styles';
-import { signin } from '../redux/auth';
+import Login from '../presentational/Login';
+import { signin } from '../../../redux/auth';
 
 
-class Login extends Component {
+class LoginContainer extends Component {
   constructor(props){
     super(props)
     this.state = { username: '', password: '', errorMessage: ''};
@@ -48,19 +48,17 @@ class Login extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>USERNAME</Text>
-        <TextInput style={styles.textInput} onChangeText={this.handleChangeUsername}/>
-        <Text>PASSWORD</Text>
-        <TextInput style={styles.textInput} secureTextEntry={true} onChangeText={this.handleChangePassword}/>
-        <Text onPress={this.handleSubmit}>SIGN IN</Text>
-        <Text style={styles.colorRed}>{this.state.errorMessage}</Text>
-      </View>
+      <Login
+      handleChangeUsername={this.handleChangeUsername}
+      handleChangePassword={this.handleChangePassword}
+      handleSubmit={this.handleSubmit}
+      errorMessage={this.state.errorMessage}
+      />
     );
   }
 }
 
 const mapDispatchToProps = { signin };
 
-const ConnectedLogin = connect(null, mapDispatchToProps)(Login);
+const ConnectedLogin = connect(null, mapDispatchToProps)(LoginContainer);
 export default ConnectedLogin;
