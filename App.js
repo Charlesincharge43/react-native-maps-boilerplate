@@ -10,7 +10,7 @@ import mockAPI from './mockAPI';
 
 import store from './store';
 import Login from './components/Login';
-import Mapscreen from './components/Mapscreen';
+import MapWithGeolocation from './components/map/MapWithGeolocation';
 import SideMenu from './components/SideMenu';
 import Help from './components/Help';
 import Settings from './components/Settings';
@@ -33,7 +33,9 @@ export default class App extends React.Component {
 }
 
 const drawerScreenNavigationOptions = ({ navigation }) => {
-  const goBackToMapScreen = () => navigation.navigate('Mapscreen');
+  /* Screens with this navigation option will be rendered with a header
+  and back button that goes directly back to the `Map` screen */
+  const goBackToMapScreen = () => navigation.navigate('Map');
   return {
     header: <CustomHeader onPress={() => {
       goBackToMapScreen();
@@ -41,9 +43,13 @@ const drawerScreenNavigationOptions = ({ navigation }) => {
   }
 }
 
+const hideFromDrawer = () => {
+  return { drawerLabel: () => null };
+}
+
 const DrawerStack = createDrawerNavigator(
   {
-    Mapscreen: { screen: Mapscreen },
+    Map: { screen: MapWithGeolocation, navigationOptions: hideFromDrawer },
     Help: createStackNavigator({
       HelpMain: { screen: Help, navigationOptions: drawerScreenNavigationOptions }
     }),
