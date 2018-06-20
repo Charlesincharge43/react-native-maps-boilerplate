@@ -2,19 +2,18 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
 
-import {Text, View, Icon} from 'react-native';
-
 /* this is just temporary way to initialize the mock api script
 There should be a better way to do it */
 import mockAPI from './mockAPI';
 
 import store from './store';
-import ConnectedLogin from './components/login/container/LoginContainer';
-import MapWithGeolocation from './components/map/container/Mapscreen';
-import SideMenu from './components/shared/presentational/SideMenu';
-import Help from './components/help/presentational/Help';
-import Settings from './components/settings/presentational/Settings';
-import CustomHeader from './components/shared/presentational/CustomHeader';
+
+import ConnectedStatefulLogin from './components/Login/ConnectedStatefulLogin';
+import StatefulMapWithGeoloc from './components/Map/StatefulMapWithGeoloc';
+import Help from './components/Help/Help';
+import Settings from './components/Settings/Settings';
+import CustomHeader from './components/shared/CustomHeader';
+import SideMenu from './components/shared/SideMenu';
 
 /* Note: entry point for react native must be a class that extends
 React.Component.  Cannot be a dumb component
@@ -49,7 +48,7 @@ const hideFromDrawer = () => {
 
 const DrawerStack = createDrawerNavigator(
   {
-    Map: { screen: MapWithGeolocation, navigationOptions: hideFromDrawer },
+    Map: { screen: StatefulMapWithGeoloc, navigationOptions: hideFromDrawer },
     Help: createStackNavigator({
       HelpMain: { screen: Help, navigationOptions: drawerScreenNavigationOptions }
     }),
@@ -64,7 +63,7 @@ const DrawerStack = createDrawerNavigator(
 );
 
 const MainStack = createStackNavigator({
-  Login: { screen: ConnectedLogin },
+  Login: { screen: ConnectedStatefulLogin },
   Main: {
     screen: DrawerStack,
     navigationOptions: () => ({header: null})

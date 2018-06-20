@@ -1,5 +1,5 @@
 {
-  "name": "react-maps-boilerplate-transferlater",
+  "name": "react-maps-boilerplate",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -7,7 +7,12 @@
     "react-native-scripts": "1.14.0",
     "react-test-renderer": "16.3.1"
   },
+  "author": "Charles Long",
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Charlesincharge43/react-maps-boilerplate.git"
+  },
   "scripts": {
     "start": "react-native-scripts start",
     "eject": "react-native-scripts eject",

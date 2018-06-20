@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import {
-  TextInput,
-  Text,
-  View } from 'react-native';
 import { connect } from 'react-redux';
 
-import Login from '../presentational/Login';
-import { signin } from '../../../redux/auth';
+import Login from './Login';
+import { signin } from '../../redux/auth';
 
 
-class LoginContainer extends Component {
+class StatefulLogin extends Component {
   constructor(props){
     super(props)
     this.state = { username: '', password: '', errorMessage: ''};
@@ -60,5 +56,5 @@ class LoginContainer extends Component {
 
 const mapDispatchToProps = { signin };
 
-const ConnectedLogin = connect(null, mapDispatchToProps)(LoginContainer);
-export default ConnectedLogin;
+const ConnectedStatefulLogin = connect(null, mapDispatchToProps)(StatefulLogin);
+export default ConnectedStatefulLogin;

@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
   TextInput,
   Text,
   View } from 'react-native';
 
-import styles from '../styles'
+import styles from './styles'
 
 const SideMenu = (props) => 
 <View style={styles.container}>

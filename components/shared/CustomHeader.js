@@ -1,7 +1,7 @@
 import React from 'react';
-
-import styles from '../styles'
 import {Text, View, TouchableOpacity} from 'react-native';
+
+import styles from './styles'
 
 const CustomHeader = (props) => {
   return (
