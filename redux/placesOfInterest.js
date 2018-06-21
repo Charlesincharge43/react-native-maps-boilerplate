@@ -2,8 +2,6 @@ import axios from 'axios';
 
 import REST from './restConstants';
 
-// TODO: object, rather than array!
-
 /* -----------  ACTION TYPES ----------- */
 
 const ADD_PLACES_OF_INTEREST = 'ADD_PLACES_OF_INTEREST';

@@ -17,10 +17,23 @@ const mock = new MockAdapter(axios);
 mock.onPost(REST.ENDPNTS.DEFAULT + REST.RES.SIGNIN)
   .reply(config => {
     // console.log(config);
-    const request = JSON.parse(config.data);
-    // console.log(request)
+    const requestBody = JSON.parse(config.data);
+    // console.log(requestBody)
 
-    return [200, {user: {name: 'TestUser-' + request.username, preferences: {} } }]
+    return [200, { user: { name: 'TestUser-' + requestBody.username, preferences: {} } }];
   })
 
+/* fetchPOI */
+
+mock.onGet(REST.ENDPNTS.DEFAULT + REST.RES.GETPOIS)
+  .reply(config => {
+    // console.log(config)
+    // const requestParams = config.params;
+    // console.log(requestParams)
+
+    return [200, [{ coordinate: { latitude: 123, longitude: 123 }, id: 1, name: 'test' },
+    { coordinate: { latitude: 124, longitude: 123 }, id: 2, name: 'test' },
+    { coordinate: { latitude: 125, longitude: 123 }, id: 3, name: 'test' },
+    ]];
+  })
 export default {};

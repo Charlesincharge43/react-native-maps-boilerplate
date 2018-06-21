@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   topLeft: {
     top: 35,
     left: 15,
+    zIndex: 1,
   },
   bottomRight: {
     top: 500,

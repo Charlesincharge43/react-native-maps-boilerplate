@@ -1,21 +1,16 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 
 import styles from './styles';
+import btnFactory from '../shared/hoc/btnFactory';
 
-const Hamburger = (props) => {
-  const additionalStyle = props.style || {};
-  return (
-    <TouchableOpacity style={[styles.hamburger, additionalStyle]} onPress={() => {
-      if (props.onPress){
-        props.onPress();
-      }
-    }}>
-      <View style={styles.hamburgerLine} />
-      <View style={styles.hamburgerLine}/>
-      <View style={styles.hamburgerLine}/>
-    </TouchableOpacity>
-  )
-}
+const HamburgerView = () =>
+  <View style={styles.hamburger}>
+    <View style={styles.hamburgerLine} />
+    <View style={styles.hamburgerLine}/>
+    <View style={styles.hamburgerLine}/>
+  </View>
+
+const Hamburger = btnFactory(HamburgerView);
 
 export default Hamburger;

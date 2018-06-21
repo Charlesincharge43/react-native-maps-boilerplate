@@ -9,6 +9,8 @@ import CenterBtn from './CenterBtn';
 import withGeolocation from '../shared/hoc/withGeolocation';
 import MarkersContainer from './Markers/MarkersContainer';
 
+import { fetchPOIs } from '../../redux/placesOfInterest';
+
 /* global navigator */
 /* the global object `navigator `is react-native's built-in geolocation API */
 
@@ -18,12 +20,10 @@ class StatefulMap extends Component {
     this.state = {
       latitudeDelta: 0.0025,
       longitudeDelta: 0.0025,
-      userLatitude: 0,
-      userLongitude: 0,
-      trackCurrentPosition: true,
-      detachedLatitude: 0,
-      detachedLongitude: 0,
+      selectedLatitude: 0,
+      selectedLongitude: 0,
       isMapReady: false,
+      trackCurrentPosition: true,
     };
 
     this.onRegionChange = this.onRegionChange.bind(this);
@@ -34,12 +34,21 @@ class StatefulMap extends Component {
 
   onMapReady() {
     this.setState({ isMapReady: true });
+    this.props.updateCurrentPosition()
+      .then(() => {
+        console.log('did props update yet? ')
+        console.log(this.props.geolocation)
+
+        this.props.fetchPOIs(this.getRegion())
+      })
+
   }
 
   centerMapToCurrentPosition() {
     this.setState({
       trackCurrentPosition: true,
     });
+    this.props.updateCurrentPosition();
   }
 
   onRegionChange() {
@@ -57,28 +66,30 @@ class StatefulMap extends Component {
     this.setState({
       latitudeDelta,
       longitudeDelta,
-      detachedLatitude: latitude,
-      detachedLongitude: longitude,
+      selectedLatitude: latitude,
+      selectedLongitude: longitude,
     })
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { userLatitude, userLongitude } = nextProps.geolocation;
-    this.setState({
-      userLatitude,
-      userLongitude,
-    })
+  getCurrentLatitude() {
+    return this.props.geolocation.currentLatitude;
+  }
+
+  getCurrentLongitude() {
+    return this.props.geolocation.currentLongitude;
+  }
+
+  getRegion() {
+    return {
+      latitude: this.getCurrentLatitude(),
+      longitude: this.getCurrentLongitude(),
+      latitudeDelta: this.state.latitudeDelta,
+      longitudeDelta: this.state.longitudeDelta,
+    };
   }
 
   render() {
     const { openDrawer } = this.props.navigation;
-    const { userLatitude, userLongitude, latitudeDelta, longitudeDelta } = this.state;
-    const region = {
-      latitude: userLatitude,
-      longitude: userLongitude,
-      latitudeDelta,
-      longitudeDelta,
-    };
 
     return (
       <View style={styles.mapContainer}>
@@ -89,17 +100,19 @@ class StatefulMap extends Component {
         {this.state.trackCurrentPosition ?
           <MapView
             style={styles.map}
-            region={region}
+            region={this.getRegion()}
             showsUserLocation={true}
+            // onPress={(evt) => {console.log('testing: '); console.log(evt)}}
             onRegionChange={this.onRegionChange}
             onMapReady={this.onMapReady} />
           :
           <MapView
             style={styles.map}
-            initialRegion={region}
+            initialRegion={this.getRegion()}
             showsUserLocation={true}
+            // onPress={(evt) => {console.log('testing: '); console.log(evt)}}
             onRegionChangeComplete={this.onRegionChangeComplete} />}
-        
+
         <MarkersContainer />
 
         <CenterBtn style={styles.bottomRight} onPress={() => {
@@ -112,5 +125,6 @@ class StatefulMap extends Component {
 }
 
 const mapStateToProps = ({ auth }) => ({ auth });
+const mapDispatchToProps = { fetchPOIs };
 
-export default connect(mapStateToProps)(withGeolocation(StatefulMap));
+export default connect(mapStateToProps, mapDispatchToProps)(withGeolocation(StatefulMap));
