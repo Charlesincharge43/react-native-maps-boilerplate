@@ -8,8 +8,8 @@ import mockAPI from './mockAPI';
 
 import store from './store';
 
-import ConnectedStatefulLogin from './components/Login/ConnectedStatefulLogin';
-import StatefulMapWithGeoloc from './components/Map/StatefulMapWithGeoloc';
+import LoginContainer from './components/Login/LoginContainer';
+import MapContainer from './components/Map/MapContainer';
 import Help from './components/Help/Help';
 import Settings from './components/Settings/Settings';
 import CustomHeader from './components/shared/CustomHeader';
@@ -48,7 +48,7 @@ const hideFromDrawer = () => {
 
 const DrawerStack = createDrawerNavigator(
   {
-    Map: { screen: StatefulMapWithGeoloc, navigationOptions: hideFromDrawer },
+    Map: { screen: MapContainer, navigationOptions: hideFromDrawer },
     Help: createStackNavigator({
       HelpMain: { screen: Help, navigationOptions: drawerScreenNavigationOptions }
     }),
@@ -63,7 +63,7 @@ const DrawerStack = createDrawerNavigator(
 );
 
 const MainStack = createStackNavigator({
-  Login: { screen: ConnectedStatefulLogin },
+  Login: { screen: LoginContainer },
   Main: {
     screen: DrawerStack,
     navigationOptions: () => ({header: null})

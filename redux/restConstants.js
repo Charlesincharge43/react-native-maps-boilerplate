@@ -9,6 +9,7 @@ const PREFIX = '/api';
 
 /* RESOURCES */
 const SIGNIN = PREFIX + '/signin';
+const GETPOIS = PREFIX + '/placesOfInterest';
 
 const REST = {
   ENDPNTS: {
@@ -20,6 +21,7 @@ const REST = {
   },
   RES: {
     SIGNIN: SIGNIN,
+    GETPOIS: GETPOIS,
   }
 }
 
