@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ActivityIndicator, Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './styles';
@@ -12,6 +12,9 @@ import MapViewWrapper from './MapViewWrapper';
 import MarkersContainer from './Markers/MarkersContainer';
 
 import { fetchPOIs, clearPOIs } from '../../redux/placesOfInterest';
+
+const ALERT = 'Warning';
+const ERROR_MESSAGE = 'Unable to fetch places of interest from data source.  Please try again later.';
 
 /* TODO: many aspects of this component are not optimal due to some limitations and/or bugs related to either react native maps
 or ios simulator.
@@ -28,19 +31,35 @@ class StatefulMap extends Component {
       selectedLatitude: 0,
       selectedLongitude: 0,
       trackCurrentPosition: true,
+      redoSearch: false,
+      isLoading: false,
     };
 
     this.onRegionChange = this.onRegionChange.bind(this);
     this.onRegionChangeComplete = this.onRegionChangeComplete.bind(this);
     this.centerMapToCurrentPosition = this.centerMapToCurrentPosition.bind(this);
     this.onMapReady = this.onMapReady.bind(this);
+    this.loadPOIs = this.loadPOIs.bind(this);
+  }
+
+  loadPOIs() {
+    this.setState({isLoading: true})
+    const regionParams = this.state.trackCurrentPosition ? this.getCurrentRegion() : this.getSelectedRegion();
+    return this.props.fetchPOIs(regionParams)
+      .then(() => this.setState({redoSearch: false, isLoading: false }))
+      .catch(() => {
+        this.setState({redoSearch: true, isLoading: false });
+        Alert.alert(
+          ALERT,
+          ERROR_MESSAGE,
+          [{text: 'OK'}])
+      });
+
   }
 
   onMapReady() {
     this.props.updateCurrentPosition()
-      .then(() => {
-        this.props.fetchPOIs(this.getRegion())
-      })
+      .then(this.loadPOIs)
   }
 
   centerMapToCurrentPosition() {
@@ -68,6 +87,7 @@ class StatefulMap extends Component {
     if (this.props.geolocation && this.props.geolocation.initialized) {
       this.setState({
         trackCurrentPosition: false,
+        redoSearch: true,
       })
     }
   }
@@ -89,7 +109,7 @@ class StatefulMap extends Component {
     return this.props.geolocation.currentLongitude;
   }
 
-  getRegion() {
+  getCurrentRegion() {
     return {
       latitude: this.getCurrentLatitude(),
       longitude: this.getCurrentLongitude(),
@@ -120,7 +140,7 @@ class StatefulMap extends Component {
 
         <MapViewWrapper
           trackCurrentPosition={this.state.trackCurrentPosition}
-          region={this.getRegion()}
+          region={this.getCurrentRegion()}
           onRegionChange={this.onRegionChange}
           onRegionChangeComplete={this.onRegionChangeComplete}
           onMapReady={this.onMapReady}>
@@ -131,7 +151,8 @@ class StatefulMap extends Component {
 
         <CenterBtn style={styles.bottomRight} onPress={this.centerMapToCurrentPosition} />
 
-        <RedoSearchBtn style={styles.bottomCenter}/>
+        <ActivityIndicator style={styles.center} size='large' color='#0000ff' animating={this.state.isLoading}/>
+        {this.state.redoSearch && <RedoSearchBtn style={styles.bottomCenter} onPress={this.loadPOIs}/>}
 
       </View>
     )

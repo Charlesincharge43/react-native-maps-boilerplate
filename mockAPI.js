@@ -10,7 +10,7 @@ const mock = new MockAdapter(axios, { delayResponse: 500 });
 
 mock
 
-/* SIGNIN */
+/* signin */
 
 // To mock "unauthorized" response
 //   .onPost(REST.ENDPNTS.DEFAULT + REST.RES.SIGNIN)
@@ -30,10 +30,8 @@ mock
 
     return [200, { user: { name: 'TestUser-' + requestBody.username, preferences: {} } }];
   })
-
   
 /* fetchPOI */
-
 
   .onGet(REST.ENDPNTS.DEFAULT + REST.RES.GETMOCKPOIS)
   .reply(config => {

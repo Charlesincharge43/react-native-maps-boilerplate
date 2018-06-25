@@ -39,7 +39,9 @@ export const createConvertedQueryParams = (queryParams, key) => {
   }
 }
 
-export const dummyPois1 = [
+/* Reminder that if you are going to render these markers on the map, you should set your simulator's location
+accordingly if you want to see them */
+export const dummyPois = [
      {
       "coordinate": {
         "latitude": 37.32749399999999,

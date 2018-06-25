@@ -18,6 +18,11 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
+  center: {
+    position: 'absolute',
+    alignSelf: 'center',
+    top: '50%',
+  },
   topLeft: {
     top: 60,
     left: 30,
@@ -31,7 +36,7 @@ const styles = StyleSheet.create({
   bottomCenter: {
     position: 'absolute',
     bottom: 75,
-    alignSelf: "center",
+    alignSelf: 'center',
   },
 })
 

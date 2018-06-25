@@ -29,6 +29,8 @@ export default function reducer(state = [], action) {
 
 export const clearPOIs = () => dispatch => dispatch(clearPlacesOfInterest());
 
+// Uncomment one of the following poi fetching thunks that is most suitable for your purposes
+
 // // fetch mock pois
 // import { translateMockPOIsResponse } from './utils/dataTranslationUtil';
 // export const fetchPOIs = queryParams => dispatch => {
@@ -37,23 +39,24 @@ export const clearPOIs = () => dispatch => dispatch(clearPlacesOfInterest());
 //     .then(pois => dispatch(addPlacesOfInterest(pois)))
 // }
 
-// // // fetch dummy google maps pois
-// import { dummyPois1 } from './utils/dataTranslationUtil';
-// export const fetchPOIs = queryParams => dispatch => {
-//   return new Promise(resolve => {
-//     setTimeout(() => resolve(), 500)
-//   })
-//   .then(() => dummyPois1)
-//   .then(pois => dispatch(addPlacesOfInterest(pois)));
-// }
-
-// fetch google maps pois
-import { handleGoogleMapsAPIResponse, translateGoogleMapsNearbySearchResponse, createConvertedQueryParams } from './utils/dataTranslationUtil';
+// fetch dummy google maps pois
+import { dummyPois } from './utils/dataTranslationUtil';
 export const fetchPOIs = queryParams => dispatch => {
-  const convertedQueryParams = createConvertedQueryParams(queryParams, REST.APIKEY.GOOGLEMAPS);
-  // console.log(REST.ENDPNTS.GOOGLEMAPSAPI + REST.RES.GETGOOGLEMAPSPOIS)
-  return axios.get(REST.ENDPNTS.GOOGLEMAPSAPI + REST.RES.GETGOOGLEMAPSPOIS, {params: convertedQueryParams})
-    .then(handleGoogleMapsAPIResponse)
-    .then(translateGoogleMapsNearbySearchResponse)
-    .then(pois => dispatch(addPlacesOfInterest(pois)))
+  return new Promise(resolve => {
+    setTimeout(() => resolve(), 500)
+  })
+  // .then(() => {throw new Error('Test Error')})
+  .then(() => dummyPois)
+  .then(pois => dispatch(addPlacesOfInterest(pois)));
 }
+
+// // fetch google maps pois
+// import { handleGoogleMapsAPIResponse, translateGoogleMapsNearbySearchResponse, createConvertedQueryParams } from './utils/dataTranslationUtil';
+// export const fetchPOIs = queryParams => dispatch => {
+//   const convertedQueryParams = createConvertedQueryParams(queryParams, REST.APIKEY.GOOGLEMAPS);
+//   // console.log(REST.ENDPNTS.GOOGLEMAPSAPI + REST.RES.GETGOOGLEMAPSPOIS)
+//   return axios.get(REST.ENDPNTS.GOOGLEMAPSAPI + REST.RES.GETGOOGLEMAPSPOIS, {params: convertedQueryParams})
+//     .then(handleGoogleMapsAPIResponse)
+//     .then(translateGoogleMapsNearbySearchResponse)
+//     .then(pois => dispatch(addPlacesOfInterest(pois)))
+// }
