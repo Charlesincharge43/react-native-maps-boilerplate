@@ -2,28 +2,48 @@ import React from 'react';
 import { View } from 'react-native';
 import MapView from 'react-native-maps';
 
-import DataTranslate from './DataTranslate';
+// const Markers = ({ markersData, onMarkerSelect }) => {
+//   console.log('inside markers: ')
+//   console.log(markersData)
+//   return <View>
+//     {
+//       markersData.map((singleMarkerProps, idx) =>
+//         <MapView.Marker
+//               key= {idx}
+//               coordinate={singleMarkerProps.coordinate}
+//               identifier={singleMarkerProps.identifier}
+//               onSelect={onMarkerSelect}
+//               pinColor='black'
+//               title={singleMarkerProps.title}
+//             />)
+//     }
+//   </View>
 
-const Markers = ({ markersData, onMarkerSelect }) => {
-  return <View>
-    {
-      markersData.map(singleMarkerData =>
-        <DataTranslate
-          key={singleMarkerData.id}
-          singleMarkerData={singleMarkerData}
-          render={(translatedData) => {
-            return <MapView.Marker
-              coordinate={translatedData.coordinate}
-              identifier={translatedData.identifier}
-              onSelect={onMarkerSelect}
-              pinColor='black'
-              title={translatedData.title}
-            />
-          }}
-          />)
+// }
+
+// export default Markers;
+
+export default class Markers extends React.Component {
+  componentDidUpdate(prevProps){
+    console.log('did it update?')
+    if (prevProps.markersData !== this.props.markersData){
+
+      this.forceUpdate();
     }
-  </View>
-
+  }
+  render() {
+    return <View>
+        {
+          this.props.markersData.map((singleMarkerProps, idx) =>
+            <MapView.Marker
+                  key= {idx}
+                  coordinate={singleMarkerProps.coordinate}
+                  identifier={singleMarkerProps.identifier}
+                  onSelect={this.props.onMarkerSelect}
+                  pinColor='black'
+                  title={singleMarkerProps.title}
+                />)
+        }
+      </View>
+  }
 }
-
-export default Markers;

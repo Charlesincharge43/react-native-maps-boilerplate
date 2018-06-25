@@ -1,8 +1,9 @@
 import React from 'react';
-import {View } from 'react-native';
+import {View} from 'react-native';
 import MapView from 'react-native-maps';
 
 import styles from './styles';
+import { connect } from 'react-redux';
 
 /*
 TODO: This is a very hacky solution as a workaround for some current react native maps limitations.
@@ -18,17 +19,28 @@ class MapViewWrapper extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.trackCurrentPosition && (prevProps.region !== this.props.region)) {
-      this.setState({
-        renderUserInteractionRestrictedMap: true
-      })
-      setTimeout(() => {
-        this.setState({
-          renderUserInteractionRestrictedMap: false
-        })
-      }, 0)
+    if (this.isTrackingAndPositionChanged(prevProps) || this.isPOIListChanged(prevProps)) {
+      this.adjustMapToGeoloc();
     }
+  }
 
+  isTrackingAndPositionChanged(prevProps){
+    return prevProps.trackCurrentPosition && (prevProps.region !== this.props.region);
+  }
+
+  isPOIListChanged(prevProps){
+    return prevProps.placesOfInterest !== this.props.placesOfInterest;
+  }
+
+  adjustMapToGeoloc(){
+    this.setState({
+      renderUserInteractionRestrictedMap: true
+    })
+    setTimeout(() => {
+      this.setState({
+        renderUserInteractionRestrictedMap: false
+      })
+    }, 0)
   }
 
   render() {
@@ -45,6 +57,7 @@ class MapViewWrapper extends React.Component {
           style={styles.map}
           initialRegion={this.props.region}
           showsUserLocation={true}
+          // onPress={(e) => {console.log(e.nativeEvent);}} // uncomment to easily grab coordinate info by pressing anywhere on the map
           onRegionChange={this.props.onRegionChange}
           onRegionChangeComplete={this.props.onRegionChangeComplete}
           onMapReady={this.props.onMapReady}>
@@ -55,10 +68,16 @@ class MapViewWrapper extends React.Component {
 
 }
 
-export default MapViewWrapper;
+const mapStateToProps = ({placesOfInterest}) => ({ placesOfInterest });
+
+export default connect(mapStateToProps)(MapViewWrapper);
+
+// export default MapViewWrapper;
 
 
 /*
+
+
 
 The gist of it is that it is difficult to implement react native maps in a way that allows the
 same MapView to programmatically update its location from some geolocation source and give the user
