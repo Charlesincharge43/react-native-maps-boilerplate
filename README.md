@@ -1,12 +1,12 @@
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
 
-## REACT NATIVE MAPS BOILERPLATE
+## React Native Maps Boilerplate
 
 This project is intended to make it easier for others to create their own react-native-maps application.
 
 Currently a work in progress, but feel free to use any of what I have so far if it helps :)
 
-## BASIC FEATURES
+## Basic Features
 
 * Barebones stateful login screen connected to react redux (submission will dispatch a thunk that will call
 a mocked API)
@@ -15,20 +15,20 @@ a mocked API)
 * A side menu (reachable via hamburger) for navigating to other screens
 * Some other features not listed (this list will be updated as this project evolves)
 
-## INSTALLATION
+## Installation
 
 #### `yarn install`
 #### `yarn start`
 
-EZ PZ :D
+ez pz :D
 
 (for more detailed instructions on react native setup, please refer to the [Create React Native App ReadMe] (https://github.com/react-community/create-react-native-app/blob/master/README.md))
 
-## ADDITIONAL NOTES
+## Additional Notes
 
 This application is only tested for ios.
 
-## PENDING ITEMS
+## Pending Items
 
 * tests
 * stylesheets refactor
