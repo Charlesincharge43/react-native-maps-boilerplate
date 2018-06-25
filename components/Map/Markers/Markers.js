@@ -11,14 +11,13 @@ const Markers = ({ markersData, onMarkerSelect }) => {
         <DataTranslate
           key={singleMarkerData.id}
           singleMarkerData={singleMarkerData}
-          render={(singleMarkerProps) => {
+          render={(translatedData) => {
             return <MapView.Marker
-              coordinate={singleMarkerProps.coordinate}
-              identifier={singleMarkerProps.identifier}
+              coordinate={translatedData.coordinate}
+              identifier={translatedData.identifier}
               onSelect={onMarkerSelect}
-              image={singleMarkerProps.img}
-              // pinColor='black'
-              title={singleMarkerProps.title}
+              pinColor='black'
+              title={translatedData.title}
             />
           }}
           />)

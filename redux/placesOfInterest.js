@@ -5,13 +5,11 @@ import REST from './restConstants';
 /* -----------  ACTION TYPES ----------- */
 
 const ADD_PLACES_OF_INTEREST = 'ADD_PLACES_OF_INTEREST';
-// const GET_DETAIL_FOR_PLACE_OF_INTEREST = 'GET_DETAIL_FOR_PLACE_OF_INTEREST';
 const CLEAR_PLACES_OF_INTEREST = 'CLEAR_PLACES_OF_INTEREST';
 
 /* -----------  ACTION CREATORS ----------- */
 
 const addPlacesOfInterest = pois => ({ type: ADD_PLACES_OF_INTEREST, pois });
-// const getDetailForPlaceOfInterest = poiDetail => ({ type: GET_DETAIL_FOR_PLACE_OF_INTEREST, poiDetail });
 const clearPlacesOfInterest = () => ({ type: CLEAR_PLACES_OF_INTEREST });
 
 /* -----------  REDUCER ----------- */

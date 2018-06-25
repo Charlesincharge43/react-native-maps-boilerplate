@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 
 import styles from './styles';
-import btnFactory from '../shared/hoc/btnFactory';
+import btnFactory from '../../shared/hoc/btnFactory';
 
 const HamburgerView = () =>
   <View style={styles.hamburger}>

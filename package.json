@@ -1,5 +1,5 @@
 {
-  "name": "react-maps-boilerplate",
+  "name": "react-native-maps-boilerplate",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -11,7 +11,7 @@
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Charlesincharge43/react-maps-boilerplate.git"
+    "url": "git+https://github.com/Charlesincharge43/react-native-maps-boilerplate.git"
   },
   "scripts": {
     "start": "react-native-scripts start",

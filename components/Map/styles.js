@@ -18,23 +18,6 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
   },
-  centerBtn: {
-    right: 25,
-    zIndex: 1,
-  },
-  hamburger: {
-    flex: 0,
-    zIndex: 1,
-    height: 15,
-    width: 25,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-  hamburgerLine: {
-    width: 25,
-    height: 3,
-    backgroundColor: 'black',
-  },
   topLeft: {
     top: 35,
     left: 15,
@@ -44,10 +27,10 @@ const styles = StyleSheet.create({
     top: 500,
     left: 330,
   },
-  centerBtnText: {
-    color: 'blue',
-    fontWeight: 'bold',
-  }
+  bottomCenter: {
+    top: 650,
+    left: 165,
+  },
 })
 
 export default styles;

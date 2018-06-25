@@ -36,9 +36,7 @@ const drawerScreenNavigationOptions = ({ navigation }) => {
   and back button that goes directly back to the `Map` screen */
   const goBackToMapScreen = () => navigation.navigate('Map');
   return {
-    header: <CustomHeader onPress={() => {
-      goBackToMapScreen();
-    }}/>
+    header: <CustomHeader onPress={goBackToMapScreen}/>
   }
 }
 

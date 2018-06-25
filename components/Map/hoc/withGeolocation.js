@@ -1,11 +1,15 @@
 import React from 'react';
 
+/* global navigator */
+/* the global object `navigator `is react-native's built-in geolocation API */
+
 /* Higher order component to enhance wrapped components with geolocation data */
 const withGeolocation = (WrappedComponent) => {
   return class extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
+        initialized : false,
         currentLatitude: 0,
         currentLongitude: 0,
         error: null,
@@ -17,6 +21,7 @@ const withGeolocation = (WrappedComponent) => {
       this.watchPositionId = navigator.geolocation.watchPosition(
         (position) => {
           this.setState({
+            initialized: true,
             currentLatitude: position.coords.latitude,
             currentLongitude: position.coords.longitude,
           });

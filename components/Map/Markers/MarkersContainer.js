@@ -9,18 +9,16 @@ class StatefulMarkers extends Component {
     this.onMarkerSelect = this.onMarkerSelect.bind(this);
   }
 
-  onMarkerSelect(evt) {
-    console.log('marker selected : ');
-    console.log(evt);
-    // this.props.fetchPOIDetail();
+  onMarkerSelect(e) {
+    /* Note: do NOT console log the event by itself ever.  You can console log e.nativeEvent just fine
+    but attempting to log just the `e` will cause the map to not work correctly! */
+    // console.log(e.nativeEvent)
+
+    /* do something here - fetch POI detail etc. */
+    // this.props.fetchPOIDetail(e.nativeEvent.coordinate);
   }
   render() {
-    // console.log('pois')
-    // console.log(this.props.placesOfInterest)
-    // console.log(this.onMarkerSelect)
-    return (
-      <Markers markersData={this.props.placesOfInterest} onMarkerSelect={this.onMarkerSelect} />
-    )
+    return <Markers markersData={this.props.placesOfInterest} onMarkerSelect={this.onMarkerSelect} />
   }
 }
 

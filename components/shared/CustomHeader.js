@@ -3,6 +3,7 @@ import {Text, View, TouchableOpacity} from 'react-native';
 
 import styles from './styles'
 
+/* TODO: refactor so that this component uses btnFactory */
 const CustomHeader = (props) => {
   return (
     <View style={styles.customHeader}>

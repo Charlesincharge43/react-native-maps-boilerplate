@@ -1,28 +1,32 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import MapView from 'react-native-maps';
 import { connect } from 'react-redux';
 
 import styles from './styles';
-import Hamburger from './Hamburger';
-import CenterBtn from './CenterBtn';
-import withGeolocation from '../shared/hoc/withGeolocation';
+import Hamburger from './buttons/Hamburger';
+import CenterBtn from './buttons/CenterBtn';
+import RedoSearchBtn from './buttons/RedoSearchBtn';
+
+import withGeolocation from '../Map/hoc/withGeolocation';
+import MapViewWrapper from './MapViewWrapper';
 import MarkersContainer from './Markers/MarkersContainer';
 
-import { fetchPOIs } from '../../redux/placesOfInterest';
+import { fetchPOIs, clearPOIs } from '../../redux/placesOfInterest';
 
-/* global navigator */
-/* the global object `navigator `is react-native's built-in geolocation API */
+/* TODO: many aspects of this component are not optimal due to some limitations and/or bugs related to either react native maps
+or ios simulator.
+
+When the relevant enhancements/fixes have been implemented, the sub optimal code should be refactored.
+Scroll to `onRegionChange` method for specific notes.  Also see `MapViewWrapper.js` */
 
 class StatefulMap extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      latitudeDelta: 0.0025,
-      longitudeDelta: 0.0025,
+      latitudeDelta: 0.007,
+      longitudeDelta: 0.007,
       selectedLatitude: 0,
       selectedLongitude: 0,
-      isMapReady: false,
       trackCurrentPosition: true,
     };
 
@@ -33,15 +37,10 @@ class StatefulMap extends Component {
   }
 
   onMapReady() {
-    this.setState({ isMapReady: true });
     this.props.updateCurrentPosition()
       .then(() => {
-        console.log('did props update yet? ')
-        console.log(this.props.geolocation)
-
         this.props.fetchPOIs(this.getRegion())
       })
-
   }
 
   centerMapToCurrentPosition() {
@@ -52,9 +51,21 @@ class StatefulMap extends Component {
   }
 
   onRegionChange() {
-    /* Hacky solution because react native maps would always call onRegionChange a couples times
-    in the beginning */
-    if (this.state.isMapReady) {
+    /* setting of `trackCurrentPosition` to false is coupled with the `onRegionChange` hook here, in order to allow
+    manual user interaction to disable automatic location updating from the `withGeolocation` props.  This
+    is suboptimal as `onRegionChange` also gets triggered when the application does any sort of map scrolling animation.
+    
+    Unfortunately, react native maps does NOT provide a way to distinguish region change from user vs from the application.
+    Consequently, map location updating from the application have to avoid "animations" to not trigger this hook.
+    (See MapViewWrapper.js comments)
+    (See related github issues thread: https://github.com/react-community/react-native-maps/issues/1620)
+
+    Because there is an automatic animation movement that always triggers after component mounting/onMapReady, but before
+    `withGeolocation` has updated props, this `if` conditional is required to avoid `trackCurrentPosition` from being set to
+    false prematurely in the beginning before the user has had a chance to interact with the map
+    */
+
+    if (this.props.geolocation && this.props.geolocation.initialized) {
       this.setState({
         trackCurrentPosition: false,
       })
@@ -62,7 +73,6 @@ class StatefulMap extends Component {
   }
 
   onRegionChangeComplete({ latitude, longitude, latitudeDelta, longitudeDelta }) {
-    console.log('setting custom map window')
     this.setState({
       latitudeDelta,
       longitudeDelta,
@@ -88,36 +98,40 @@ class StatefulMap extends Component {
     };
   }
 
+  getSelectedRegion() {
+    return {
+      latitude: this.state.selectedLatitude,
+      longitude: this.state.selectedLongitude,
+      latitudeDelta: this.state.latitudeDelta,
+      longitudeDelta: this.state.longitudeDelta,
+    };
+  }
+
+  componentWillUnmount(){
+    this.props.clearPOIs();
+  }
+
   render() {
     const { openDrawer } = this.props.navigation;
 
     return (
       <View style={styles.mapContainer}>
-        <Hamburger style={styles.topLeft} onPress={() => {
-          openDrawer();
-        }} />
+        <Hamburger style={styles.topLeft} onPress={openDrawer} />
 
-        {this.state.trackCurrentPosition ?
-          <MapView
-            style={styles.map}
-            region={this.getRegion()}
-            showsUserLocation={true}
-            // onPress={(evt) => {console.log('testing: '); console.log(evt)}}
-            onRegionChange={this.onRegionChange}
-            onMapReady={this.onMapReady} />
-          :
-          <MapView
-            style={styles.map}
-            initialRegion={this.getRegion()}
-            showsUserLocation={true}
-            // onPress={(evt) => {console.log('testing: '); console.log(evt)}}
-            onRegionChangeComplete={this.onRegionChangeComplete} />}
+        <MapViewWrapper
+          trackCurrentPosition={this.state.trackCurrentPosition}
+          region={this.getRegion()}
+          onRegionChange={this.onRegionChange}
+          onRegionChangeComplete={this.onRegionChangeComplete}
+          onMapReady={this.onMapReady}>
+          
+          <MarkersContainer />
 
-        <MarkersContainer />
+        </MapViewWrapper>
 
-        <CenterBtn style={styles.bottomRight} onPress={() => {
-          this.centerMapToCurrentPosition();
-        }} />
+        <CenterBtn style={styles.bottomRight} onPress={this.centerMapToCurrentPosition} />
+
+        <RedoSearchBtn style={styles.bottomCenter}/>
 
       </View>
     )
@@ -125,6 +139,6 @@ class StatefulMap extends Component {
 }
 
 const mapStateToProps = ({ auth }) => ({ auth });
-const mapDispatchToProps = { fetchPOIs };
+const mapDispatchToProps = { fetchPOIs, clearPOIs };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withGeolocation(StatefulMap));
