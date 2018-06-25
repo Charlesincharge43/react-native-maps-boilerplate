@@ -22,7 +22,8 @@ a mocked API)
 
 ez pz :D
 
-(for more detailed instructions on react native setup, please refer to the [Create React Native App ReadMe] (https://github.com/react-community/create-react-native-app/blob/master/README.md))
+(for more detailed instructions on react native setup, please refer to the
+[Create React Native App ReadMe](https://github.com/react-community/create-react-native-app/blob/master/README.md))
 
 ## Additional Notes
 
