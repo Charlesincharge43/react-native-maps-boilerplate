@@ -18,18 +18,7 @@ class StatefulMarkers extends Component {
     // this.props.fetchPOIDetail(e.nativeEvent.coordinate);
   }
 
-  componentDidUpdate(prevProps){
-    console.log('did it update?')
-    if (prevProps.placesOfInterest !== this.props.placesOfInterest){
-      console.log('force update222?')
-      this.forceUpdate();
-    }
-  }
-
   render() {
-    console.log('did i at least get here?')
-    console.log('pois in markerscontainer :')
-    console.log(this.props.placesOfInterest)
     return <Markers markersData={this.props.placesOfInterest} onMarkerSelect={this.onMarkerSelect} />
   }
 }

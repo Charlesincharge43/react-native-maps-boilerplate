@@ -77,8 +77,6 @@ export default connect(mapStateToProps)(MapViewWrapper);
 
 /*
 
-
-
 The gist of it is that it is difficult to implement react native maps in a way that allows the
 same MapView to programmatically update its location from some geolocation source and give the user
  the option to "decouple" it from that source and manually move it around.
@@ -109,4 +107,10 @@ while giving the user the ability to move it around manual afterward.
 This option appears not to cause any performance hits (React does not attempt to completely rerender the
 entire map every time one of the conditionals change), but it's clearly not good practice.  This wrapper should
 be removed as soon as it's possible to do so.
+
+UPDATE:
+Map adjustment is now also required for POI changes in redux.  There is a react native maps bug where
+markers will not update unless you tear down the marker components and rerender them. (invoking
+this.forceUpdate() does not appear to work unfortunately, so map adjustment is needed to force it).
+
 */
