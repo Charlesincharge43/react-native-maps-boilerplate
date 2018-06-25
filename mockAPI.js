@@ -1,23 +1,28 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import REST from './redux/restConstants';
+import REST from './redux/constants/restConstants';
 
 const mock = new MockAdapter(axios);
 
 
+/* mock start */
+
+mock
+
 /* SIGNIN */
 
 // To mock "unauthorized" response
-// mock.onPost(REST.ENDPNTS.DEFAULT + REST.RES.SIGNIN)
+//   .onPost(REST.ENDPNTS.DEFAULT + REST.RES.SIGNIN)
 //   .reply(401);
 
 // To mock "500 internal server error" response
-// mock.onPost(REST.ENDPNTS.DEFAULT + REST.RES.SIGNIN)
+//   .onPost(REST.ENDPNTS.DEFAULT + REST.RES.SIGNIN)
 //   .reply(500);
 
 // To mock successful login
-mock.onPost(REST.ENDPNTS.DEFAULT + REST.RES.SIGNIN)
+
+  .onPost(REST.ENDPNTS.DEFAULT + REST.RES.SIGNIN)
   .reply(config => {
     // console.log(config);
     const requestBody = JSON.parse(config.data);
@@ -29,7 +34,8 @@ mock.onPost(REST.ENDPNTS.DEFAULT + REST.RES.SIGNIN)
   
 /* fetchPOI */
 
-mock.onGet(REST.ENDPNTS.DEFAULT + REST.RES.GETPOIS)
+
+  .onGet(REST.ENDPNTS.DEFAULT + REST.RES.GETMOCKPOIS)
   .reply(config => {
     // console.log(config)
     // const requestParams = config.params;
@@ -40,4 +46,10 @@ mock.onGet(REST.ENDPNTS.DEFAULT + REST.RES.GETPOIS)
     { coordinate: { latitude: 37.335527, longitude: -122.034461 }, id: 3, name: 'test3' },
     ]];
   })
+
+
+/* pass through all other requests */
+  .onAny()
+  .passThrough();
+
 export default {};

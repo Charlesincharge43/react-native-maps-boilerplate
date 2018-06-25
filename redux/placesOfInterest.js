@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import REST from './restConstants';
+import REST from './constants/restConstants';
 
 /* -----------  ACTION TYPES ----------- */
 
@@ -29,7 +29,20 @@ export default function reducer(state = [], action) {
 
 export const clearPOIs = () => dispatch => dispatch(clearPlacesOfInterest());
 
+// mock pois
+// export const fetchPOIs = queryParams => dispatch => {
+//   return axios.get(REST.ENDPNTS.DEFAULT + REST.RES.GETMOCKPOIS, {params: queryParams})
+//     .then(res => dispatch(addPlacesOfInterest(res.data)))
+// }
+
+// google maps pois
+import { handleGoogleMapsAPIResponse } from './utils/googleApiUtil';
 export const fetchPOIs = queryParams => dispatch => {
-  return axios.get(REST.ENDPNTS.DEFAULT + REST.RES.GETPOIS, {params: queryParams})
+  console.log('queryparams?')
+  console.log(queryParams)
+  console.log('rest call? ')
+  console.log(REST.ENDPNTS.GOOGLEMAPSAPI + REST.RES.GETGOOGLEMAPSPOIS)
+  return axios.get(REST.ENDPNTS.GOOGLEMAPSAPI + REST.RES.GETGOOGLEMAPSPOIS, {params: queryParams})
+    .then(handleGoogleMapsAPIResponse)
     .then(res => dispatch(addPlacesOfInterest(res.data)))
 }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import REST from './restConstants';
+import REST from './constants/restConstants';
 
 /* -----------  ACTION TYPES ----------- */
 

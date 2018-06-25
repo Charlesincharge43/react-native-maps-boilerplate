@@ -19,17 +19,19 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   topLeft: {
-    top: 35,
-    left: 15,
+    top: 60,
+    left: 30,
     zIndex: 1,
   },
   bottomRight: {
-    top: 500,
-    left: 330,
+    position: 'absolute',
+    bottom: 250,
+    right: 25,
   },
   bottomCenter: {
-    top: 650,
-    left: 165,
+    position: 'absolute',
+    bottom: 75,
+    alignSelf: "center",
   },
 })
 
