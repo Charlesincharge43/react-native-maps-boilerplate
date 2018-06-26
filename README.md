@@ -34,7 +34,6 @@ This application is only tested for ios.
 * tests
 * stylesheets refactor
 * workaround for react native bug: onpress invoked for multiple markers that are too close together (maybe cluster them into one in those scenarios?)
-* more detailed comment about workaround for markers that do not dynamically update (see MarkersContainer)
 * search bar component
 * implement better way to update map (see MapContainer.js notes)
 * better readme.md
