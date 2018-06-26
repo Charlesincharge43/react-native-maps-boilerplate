@@ -8,7 +8,7 @@ import CenterBtn from './buttons/CenterBtn';
 import RedoSearchBtn from './buttons/RedoSearchBtn';
 
 import withGeolocation from '../Map/hoc/withGeolocation';
-import MapViewWrapper from './MapView/MapViewWrapper';
+import MapViewContainer from './MapView/MapViewContainer';
 
 import { fetchPOIs, clearPOIs } from '../../redux/placesOfInterest';
 
@@ -19,7 +19,11 @@ const ERROR_MESSAGE = 'Unable to fetch places of interest from data source.  Ple
 or ios simulator.
 
 When the relevant enhancements/fixes have been implemented, the sub optimal code should be refactored.
-Scroll to `onRegionChange` method for specific notes.  Also see `MapViewWrapper.js` */
+Scroll to `onRegionChange` method for specific notes.  Also see `MapViewContainer.js`
+
+TODO: A lot of map related state is split arbitrarily between this MapViewContainer and the MapContainer.
+These two containers and the withGeolocation hoc all are badly in in need of refactoring.
+*/
 
 class StatefulMap extends Component {
   constructor(props) {
@@ -42,6 +46,7 @@ class StatefulMap extends Component {
   }
 
   loadPOIs() {
+    /* TODO: need to make this a "setPOI" rather than "fetch" (add) */
     this.setState({isLoading: true})
     const regionParams = this.state.trackCurrentPosition ? this.getCurrentRegion() : this.getSelectedRegion();
     return this.props.fetchPOIs(regionParams, {clearOnSuccess: true})
@@ -75,7 +80,7 @@ class StatefulMap extends Component {
     
     Unfortunately, react native maps does NOT provide a way to distinguish region change from user vs from the application.
     Consequently, map location updating from the application have to avoid "animations" to not trigger this hook.
-    (See MapViewWrapper.js comments)
+    (See MapViewContainer.js comments)
     (See related github issues thread: https://github.com/react-community/react-native-maps/issues/1620)
 
     Because there is an automatic animation movement that always triggers after component mounting/onMapReady, but before
@@ -136,7 +141,7 @@ class StatefulMap extends Component {
       <View style={styles.mapContainer}>
         <Hamburger style={styles.topLeft} onPress={openDrawer} />
 
-        <MapViewWrapper
+        <MapViewContainer
           trackCurrentPosition={this.state.trackCurrentPosition}
           region={this.getCurrentRegion()}
           onRegionChange={this.onRegionChange}
@@ -144,9 +149,9 @@ class StatefulMap extends Component {
           onMapReady={this.onMapReady} />
 
         <CenterBtn style={styles.bottomRight} onPress={this.centerMapToCurrentPosition} />
-        <ActivityIndicator style={styles.center} size='large' color='#0000ff' animating={this.state.isLoading}/>
         {this.state.redoSearch && <RedoSearchBtn style={styles.bottomCenter} onPress={this.loadPOIs}/>}
 
+        <ActivityIndicator style={styles.center} size='large' color='#0000ff' animating={this.state.isLoading}/>
       </View>
     )
   }
