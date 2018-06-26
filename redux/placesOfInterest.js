@@ -33,30 +33,45 @@ export const clearPOIs = () => dispatch => dispatch(clearPlacesOfInterest());
 
 // // fetch mock pois
 // import { translateMockPOIsResponse } from './utils/dataTranslationUtil';
-// export const fetchPOIs = queryParams => dispatch => {
+// export const fetchPOIs = (queryParams, {clearOnSuccess}) => dispatch => {
 //   return axios.get(REST.ENDPNTS.DEFAULT + REST.RES.GETMOCKPOIS, {params: queryParams})
 //     .then(translateMockPOIsResponse)
-//     .then(pois => dispatch(addPlacesOfInterest(pois)))
+//     .then(pois => {
+//       if (clearOnSuccess){
+//         dispatch(clearPlacesOfInterest());
+//       }
+//       dispatch(addPlacesOfInterest(pois));
+//     });
 // }
 
 // fetch dummy google maps pois
 import { dummyPois } from './utils/dataTranslationUtil';
-export const fetchPOIs = queryParams => dispatch => {
+export const fetchPOIs = (queryParams, {clearOnSuccess}) => dispatch => {
   return new Promise(resolve => {
     setTimeout(() => resolve(), 500)
   })
   // .then(() => {throw new Error('Test Error')})
   .then(() => dummyPois)
-  .then(pois => dispatch(addPlacesOfInterest(pois)));
+  .then(pois => {
+    if (clearOnSuccess){
+      dispatch(clearPlacesOfInterest());
+    }
+    dispatch(addPlacesOfInterest(pois));
+  });
 }
 
 // // fetch google maps pois
 // import { handleGoogleMapsAPIResponse, translateGoogleMapsNearbySearchResponse, createConvertedQueryParams } from './utils/dataTranslationUtil';
-// export const fetchPOIs = queryParams => dispatch => {
+// export const fetchPOIs = (queryParams, {clearOnSuccess}) => dispatch => {
 //   const convertedQueryParams = createConvertedQueryParams(queryParams, REST.APIKEY.GOOGLEMAPS);
 //   // console.log(REST.ENDPNTS.GOOGLEMAPSAPI + REST.RES.GETGOOGLEMAPSPOIS)
 //   return axios.get(REST.ENDPNTS.GOOGLEMAPSAPI + REST.RES.GETGOOGLEMAPSPOIS, {params: convertedQueryParams})
 //     .then(handleGoogleMapsAPIResponse)
 //     .then(translateGoogleMapsNearbySearchResponse)
-//     .then(pois => dispatch(addPlacesOfInterest(pois)))
+//     .then(pois => {
+//       if (clearOnSuccess){
+//         dispatch(clearPlacesOfInterest());
+//       }
+//       dispatch(addPlacesOfInterest(pois));
+//     });
 // }

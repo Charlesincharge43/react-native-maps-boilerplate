@@ -9,7 +9,6 @@ import RedoSearchBtn from './buttons/RedoSearchBtn';
 
 import withGeolocation from '../Map/hoc/withGeolocation';
 import MapViewWrapper from './MapViewWrapper';
-import MarkersContainer from './Markers/MarkersContainer';
 
 import { fetchPOIs, clearPOIs } from '../../redux/placesOfInterest';
 
@@ -45,7 +44,7 @@ class StatefulMap extends Component {
   loadPOIs() {
     this.setState({isLoading: true})
     const regionParams = this.state.trackCurrentPosition ? this.getCurrentRegion() : this.getSelectedRegion();
-    return this.props.fetchPOIs(regionParams)
+    return this.props.fetchPOIs(regionParams, {clearOnSuccess: true})
       .then(() => this.setState({redoSearch: false, isLoading: false }))
       .catch(() => {
         this.setState({redoSearch: true, isLoading: false });
@@ -133,7 +132,6 @@ class StatefulMap extends Component {
 
   render() {
     const { openDrawer } = this.props.navigation;
-
     return (
       <View style={styles.mapContainer}>
         <Hamburger style={styles.topLeft} onPress={openDrawer} />
@@ -143,11 +141,7 @@ class StatefulMap extends Component {
           region={this.getCurrentRegion()}
           onRegionChange={this.onRegionChange}
           onRegionChangeComplete={this.onRegionChangeComplete}
-          onMapReady={this.onMapReady}>
-          
-          <MarkersContainer />
-
-        </MapViewWrapper>
+          onMapReady={this.onMapReady} />
 
         <CenterBtn style={styles.bottomRight} onPress={this.centerMapToCurrentPosition} />
         <ActivityIndicator style={styles.center} size='large' color='#0000ff' animating={this.state.isLoading}/>

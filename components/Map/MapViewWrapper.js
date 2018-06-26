@@ -16,20 +16,16 @@ class MapViewWrapper extends React.Component {
   constructor(props){
     super(props);
     this.state = { renderUserInteractionRestrictedMap : false }
-  }
+    }
 
   componentDidUpdate(prevProps) {
-    if (this.isTrackingAndPositionChanged(prevProps) || this.isPOIListChanged(prevProps)) {
+    if (this.isTrackingAndPositionChanged(prevProps)) {
       this.adjustMapToGeoloc();
     }
   }
 
   isTrackingAndPositionChanged(prevProps){
     return prevProps.trackCurrentPosition && (prevProps.region !== this.props.region);
-  }
-
-  isPOIListChanged(prevProps){
-    return prevProps.placesOfInterest !== this.props.placesOfInterest;
   }
 
   adjustMapToGeoloc(){
@@ -43,16 +39,30 @@ class MapViewWrapper extends React.Component {
     }, 0)
   }
 
+  onMarkerSelect(e) {
+    /* Note: do NOT console log the event by itself ever.  You can console log e.nativeEvent just fine
+    but attempting to log just the `e` will cause the map to not work correctly! */
+    // console.log(e.nativeEvent)
+
+    /* do something here - fetch POI detail etc. */
+    // this.props.fetchPOIDetail(e.nativeEvent.coordinate);
+  }
+
   render() {
-    return (<View style={styles.mapContainer}>
-      {this.props.trackCurrentPosition && this.state.renderUserInteractionRestrictedMap ? 
+    return (
+
+    <View style={styles.mapContainer}>
+      {this.props.trackCurrentPosition && this.state.renderUserInteractionRestrictedMap ?
+
         <MapView
           style={styles.map}
           region={this.props.region}
           showsUserLocation={true}
           onRegionChange={this.props.onRegionChange}
           onMapReady={this.props.onMapReady}/>
+
         :
+
         <MapView
           style={styles.map}
           initialRegion={this.props.region}
@@ -61,9 +71,26 @@ class MapViewWrapper extends React.Component {
           onRegionChange={this.props.onRegionChange}
           onRegionChangeComplete={this.props.onRegionChangeComplete}
           onMapReady={this.props.onMapReady}>
-          {this.props.children}
+
+            {
+              /* Note.. MapView Markers MUST be DIRECT children of MapView.
+              Trust me you will suffer mightily if you do not follow this rule!! */
+              this.props.placesOfInterest.map((singleMarkerProps, idx) =>
+                <MapView.Marker
+                      key= {idx}
+                      stopPropagation={true}
+                      coordinate={singleMarkerProps.coordinate}
+                      identifier={singleMarkerProps.identifier}
+                      onSelect={this.onMarkerSelect}
+                      pinColor='black'
+                      title={singleMarkerProps.title}
+                    />)
+            }
+
         </MapView>}
-    </View>)
+    </View>
+    
+    )
   }
 
 }
@@ -107,10 +134,5 @@ while giving the user the ability to move it around manual afterward.
 This option appears not to cause any performance hits (React does not attempt to completely rerender the
 entire map every time one of the conditionals change), but it's clearly not good practice.  This wrapper should
 be removed as soon as it's possible to do so.
-
-UPDATE:
-Map adjustment is now also required for POI changes in redux.  There is a react native maps bug where
-markers will not update unless you tear down the marker components and rerender them. (invoking
-this.forceUpdate() does not appear to work unfortunately, so map adjustment is needed to force it).
 
 */

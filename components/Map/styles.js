@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   bottomCenter: {
     position: 'absolute',
-    bottom: 75,
+    bottom: 50,
     alignSelf: 'center',
   },
 })
