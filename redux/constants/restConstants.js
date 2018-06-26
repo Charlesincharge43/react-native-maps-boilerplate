@@ -12,8 +12,6 @@ const MAPS_API_PREFIX = '/maps/api';
 /* RESOURCES */
 const SIGNIN = PREFIX + '/signin';
 const GETMOCKPOIS = PREFIX + '/placesOfInterest';
-const GOOGLEMAPSINIT = MAPS_API_PREFIX + '/js';
-// ^ don't forget you also need the following query params: ?key=GOOGLEMAPS_API_KEY&callback=initMap
 const GOOGLEMAPS_NEARBY_SEARCH_JSON = MAPS_API_PREFIX + '/place/nearbysearch/json';
 const GOOGLEMAPS_NEARBY_SEARCH_XML = MAPS_API_PREFIX + '/place/nearbysearch/xml';
 /* API KEYS */
@@ -35,7 +33,6 @@ const REST = {
   },
   RES: {
     SIGNIN: SIGNIN,
-    GOOGLEMAPSINIT: GOOGLEMAPSINIT,
 
     GETMOCKPOIS: GETMOCKPOIS,
     GETGOOGLEMAPSPOIS: GOOGLEMAPS_NEARBY_SEARCH_JSON,
