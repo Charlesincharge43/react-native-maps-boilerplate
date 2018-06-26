@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   bottomRight: {
     position: 'absolute',
-    bottom: 250,
+    bottom: 200,
     right: 25,
   },
   bottomCenter: {

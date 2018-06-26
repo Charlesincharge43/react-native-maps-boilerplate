@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Alert } from 'react-native';
+import { View, ActivityIndicator, Alert, Button } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './styles';
@@ -150,7 +150,6 @@ class StatefulMap extends Component {
         </MapViewWrapper>
 
         <CenterBtn style={styles.bottomRight} onPress={this.centerMapToCurrentPosition} />
-
         <ActivityIndicator style={styles.center} size='large' color='#0000ff' animating={this.state.isLoading}/>
         {this.state.redoSearch && <RedoSearchBtn style={styles.bottomCenter} onPress={this.loadPOIs}/>}
 

@@ -20,12 +20,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
 
-
-  centerBtnText: {
-    color: 'blue',
-    fontWeight: 'bold',
-  },
-
   redoSearchBtnText: {
     color: 'blue',
     fontWeight: 'bold',
