@@ -1,13 +1,15 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
 import styles from './styles';
 import btnFactory from '../../shared/hoc/btnFactory';
 
 const RedoSearchBtnView = () =>
-  <Text style={styles.redoSearchBtnText}>
-    REDO SEARCH
-  </Text>
+  <View style={styles.redoSearchBtnContainer}>
+    <Text style={styles.redoSearchBtnText}>
+      Redo Search
+    </Text>
+  </View>
 
 const RedoSearchBtn = btnFactory(RedoSearchBtnView);
 

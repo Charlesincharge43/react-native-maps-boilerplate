@@ -2,10 +2,6 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  centerBtn: {
-    right: 25,
-    zIndex: 1,
-  },
   hamburger: {
     flex: 0,
     zIndex: 1,
@@ -20,9 +16,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
 
+  centerBtnImage: {
+    width: 30,
+    height: 40,
+    resizeMode: 'stretch'
+  },
+
+  redoSearchBtnContainer: {
+    width: 125,
+    backgroundColor: '#e0e0e0',
+    paddingVertical: 5,
+    paddingLeft: 20,
+    borderRadius: 4,
+    borderWidth: 0.5
+  },
   redoSearchBtnText: {
-    color: 'blue',
-    fontWeight: 'bold',
+    fontSize: 15,
   },
 
 })
