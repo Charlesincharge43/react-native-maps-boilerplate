@@ -67,6 +67,7 @@ export const fetchPOIs = (queryParams, {clearOnSuccess}) => dispatch => {
 // // fetch google maps pois
 // import { handleGoogleMapsAPIResponse, translateGoogleMapsNearbySearchResponse, createConvertedQueryParams } from './utils/dataTranslationUtil';
 // export const fetchPOIs = (queryParams, {clearOnSuccess}) => dispatch => {
+//   // Feel free to add a "type" property below for more specific nearby searches (e.g., type : 'restaurant')
 //   const convertedQueryParams = createConvertedQueryParams(queryParams, REST.APIKEY.GOOGLEMAPS);
 //   // console.log(REST.ENDPNTS.GOOGLEMAPSAPI + REST.RES.GETGOOGLEMAPSPOIS)
 //   return axios.get(REST.ENDPNTS.GOOGLEMAPSAPI + REST.RES.GETGOOGLEMAPSPOIS, {params: convertedQueryParams})

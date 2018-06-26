@@ -34,7 +34,7 @@ export const createConvertedQueryParams = (queryParams, key) => {
   return {
     location: `${queryParams.latitude},${queryParams.longitude}`,
     radius: queryParams.latitudeDelta * 40008000 / 720,
-    type: 'restaurant',
+    type: queryParams.type,
     key
   }
 }
