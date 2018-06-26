@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator, Alert, Button } from 'react-native';
+import { View, ActivityIndicator, Alert } from 'react-native';
 import { connect } from 'react-redux';
 
 import styles from './styles';
@@ -8,7 +8,7 @@ import CenterBtn from './buttons/CenterBtn';
 import RedoSearchBtn from './buttons/RedoSearchBtn';
 
 import withGeolocation from '../Map/hoc/withGeolocation';
-import MapViewWrapper from './MapViewWrapper';
+import MapViewWrapper from './MapView/MapViewWrapper';
 
 import { fetchPOIs, clearPOIs } from '../../redux/placesOfInterest';
 
