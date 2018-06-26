@@ -10,8 +10,6 @@ class StatefulMarkers extends Component {
   }
 
   onMarkerSelect(e) {
-    e.preventDefault();
-    
     /* Note: do NOT console log the event by itself ever.  You can console log e.nativeEvent just fine
     but attempting to log just the `e` will cause the map to not work correctly! */
     // console.log(e.nativeEvent)
