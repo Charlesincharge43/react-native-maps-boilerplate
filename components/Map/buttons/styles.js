@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   hamburger: {
-    flex: 0,
     zIndex: 1,
     height: 15,
     width: 25,
