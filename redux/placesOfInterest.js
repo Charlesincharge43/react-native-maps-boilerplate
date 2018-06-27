@@ -40,8 +40,8 @@ export const addPOIs = (queryParams) => dispatch => dispatch(fetchPOIsThenCustom
 export const setPOIs = (queryParams) => dispatch => dispatch(fetchPOIsThenCustomDispatchMock(queryParams, setPlacesOfInterest));
 
 // // dummy add/set POIs
-// export const addPOIs = (queryParams) => dispatch => dispatch(fetchPOIsThenCustomDispatchDummy(queryParams), addPlacesOfInterest);
-// export const setPOIs = (queryParams) => dispatch => dispatch(fetchPOIsThenCustomDispatchDummy(queryParams), setPlacesOfInterest);
+// export const addPOIs = (queryParams) => dispatch => dispatch(fetchPOIsThenCustomDispatchDummy(queryParams, addPlacesOfInterest));
+// export const setPOIs = (queryParams) => dispatch => dispatch(fetchPOIsThenCustomDispatchDummy(queryParams, setPlacesOfInterest));
 
 // // google maps add/set POIs
 // export const addPOIs = addPOIsGoogleMapsMaxResults;

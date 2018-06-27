@@ -26,9 +26,8 @@ const styles = StyleSheet.create({
     bottom: 200,
     right: 25,
   },
-  bottomCenter: {
+  horizontalCenter: {
     position: 'absolute',
-    bottom: 50,
     alignSelf: 'center',
   },
 })

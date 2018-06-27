@@ -7,6 +7,8 @@ import Hamburger from './buttons/Hamburger';
 import CenterBtn from './buttons/CenterBtn';
 import RedoSearchBtn from './buttons/RedoSearchBtn';
 
+import POIDetails from './POIDetails/POIDetails';
+
 import withGeolocation from '../Map/hoc/withGeolocation';
 import MapViewContainer from './MapView/MapViewContainer';
 
@@ -34,7 +36,8 @@ class StatefulMap extends Component {
       selectedLatitude: 0,
       selectedLongitude: 0,
       trackCurrentPosition: true,
-      redoSearch: false,
+      isRedoSearchHidden: true,
+      isPOIDetailsHidden: true,
       isLoading: false,
     };
 
@@ -43,22 +46,35 @@ class StatefulMap extends Component {
     this.centerMapToCurrentPosition = this.centerMapToCurrentPosition.bind(this);
     this.onMapReady = this.onMapReady.bind(this);
     this.loadPOIs = this.loadPOIs.bind(this);
+    this.showPOIDetails = this.showPOIDetails.bind(this);
+    this.hidePOIDetails = this.hidePOIDetails.bind(this);
   }
 
   loadPOIs() {
     this.setState({isLoading: true})
     const regionParams = this.state.trackCurrentPosition ? this.getCurrentRegion() : this.getSelectedRegion();
     return this.props.setPOIs(regionParams)
-      .then(() => this.setState({redoSearch: false, isLoading: false }))
+      .then(() => this.setState({isRedoSearchHidden: true, isLoading: false }))
       .catch((err) => {
         console.error(err)
-        this.setState({redoSearch: true, isLoading: false });
+        this.setState({isRedoSearchHidden: false, isLoading: false });
         Alert.alert(
           ALERT,
           ERROR_MESSAGE,
           [{text: 'OK'}])
       });
+  }
 
+  showPOIDetails() {
+    this.setState({
+      isPOIDetailsHidden: false,
+    })
+  }
+
+  hidePOIDetails() {
+    this.setState({
+      isPOIDetailsHidden: true
+    })
   }
 
   onMapReady() {
@@ -91,7 +107,7 @@ class StatefulMap extends Component {
     if (this.props.geolocation && this.props.geolocation.initialized) {
       this.setState({
         trackCurrentPosition: false,
-        redoSearch: true,
+        isRedoSearchHidden: false,
       })
     }
   }
@@ -146,10 +162,15 @@ class StatefulMap extends Component {
           region={this.getCurrentRegion()}
           onRegionChange={this.onRegionChange}
           onRegionChangeComplete={this.onRegionChangeComplete}
-          onMapReady={this.onMapReady} />
+          onMapReady={this.onMapReady}
+          showPOIDetails={ this.showPOIDetails }
+          hidePOIDetails={ this.hidePOIDetails } />
 
         <CenterBtn style={styles.bottomRight} onPress={this.centerMapToCurrentPosition} />
-        {this.state.redoSearch && <RedoSearchBtn style={styles.bottomCenter} onPress={this.loadPOIs}/>}
+
+        <RedoSearchBtn isHidden={this.state.isRedoSearchHidden || !this.state.isPOIDetailsHidden } style={styles.horizontalCenter} onPress={this.loadPOIs}/>
+
+        <POIDetails isHidden={this.state.isPOIDetailsHidden } />
 
         <ActivityIndicator style={styles.center} size='large' color='#0000ff' animating={this.state.isLoading}/>
       </View>

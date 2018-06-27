@@ -25,7 +25,7 @@ class MapViewContainer extends React.Component {
      }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState){
+  static getDerivedStateFromProps(nextProps){
     if (nextProps.placesOfInterest.length === 0) {
       return {
         selectedIdx : null,
@@ -59,6 +59,11 @@ class MapViewContainer extends React.Component {
     this.setState({
       selectedIdx: idx
     })
+    if (idx !== null){
+      this.props.showPOIDetails();
+    } else {
+      this.props.hidePOIDetails();
+    }
     /* do something here - fetch POI detail etc. */
     // this.props.fetchPOIDetail(e.nativeEvent.coordinate);
   }
