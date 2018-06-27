@@ -1,15 +1,21 @@
 
 export const handleGoogleMapsAPIResponse = (res) => {
+  // console.log('handling response')
   // console.log(res)
   if (res.data.error_message) {
+    console.error(res.data.error_message);
     throw new Error(res.data.error_message);
+  } else if (!(res.data.status === 'ZERO_RESULTS' || res.data.status === 'OK')){
+    console.error(res.data.status);
+    throw new Error(res.data.status);
   }
   return res;
 }
 
 export const translateGoogleMapsNearbySearchResponse = (res) => {
+  // console.log('translating')
   // console.log(res);
-  return res.data.results.map(place => {
+  const pois = res.data.results.map(place => {
     return {
       coordinate: {
         latitude: place.geometry.location.lat,
@@ -19,6 +25,8 @@ export const translateGoogleMapsNearbySearchResponse = (res) => {
       title: place.name,
     }
   })
+  const next_page_token = res.data.next_page_token;
+  return { pois, next_page_token };
 }
 
 export const translateMockPOIsResponse = (res) =>
@@ -30,12 +38,14 @@ export const translateMockPOIsResponse = (res) =>
     }
   })
 
+// for google maps
 export const createConvertedQueryParams = (queryParams, key) => {
   return {
     location: `${queryParams.latitude},${queryParams.longitude}`,
     radius: queryParams.latitudeDelta * 40008000 / 720,
     type: queryParams.type,
-    key
+    pagetoken: queryParams.pagetoken,
+    key,
   }
 }
 

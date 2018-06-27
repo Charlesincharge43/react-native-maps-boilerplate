@@ -33,7 +33,7 @@ class StatefulLogin extends Component {
     this.props.signin(credentials)
       .then(() => navigate('Main'))
       .catch(err => {
-        console.log('error from server: ' + err);
+        console.error('error from server: ' + err);
         if (err.response && err.response.status === 401) {
           this.setState({errorMessage: 'The email address or password you entered is incorrect.'});
         } else {

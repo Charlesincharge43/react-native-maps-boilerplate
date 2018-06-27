@@ -10,7 +10,7 @@ import RedoSearchBtn from './buttons/RedoSearchBtn';
 import withGeolocation from '../Map/hoc/withGeolocation';
 import MapViewContainer from './MapView/MapViewContainer';
 
-import { fetchPOIs, clearPOIs } from '../../redux/placesOfInterest';
+import { setPOIs, addPOIs, clearPOIs } from '../../redux/placesOfInterest';
 
 const ALERT = 'Warning';
 const ERROR_MESSAGE = 'Unable to fetch places of interest from data source.  Please try again later.';
@@ -46,12 +46,12 @@ class StatefulMap extends Component {
   }
 
   loadPOIs() {
-    /* TODO: need to make this a "setPOI" rather than "fetch" (add) */
     this.setState({isLoading: true})
     const regionParams = this.state.trackCurrentPosition ? this.getCurrentRegion() : this.getSelectedRegion();
-    return this.props.fetchPOIs(regionParams, {clearOnSuccess: true})
+    return this.props.setPOIs(regionParams)
       .then(() => this.setState({redoSearch: false, isLoading: false }))
-      .catch(() => {
+      .catch((err) => {
+        console.error(err)
         this.setState({redoSearch: true, isLoading: false });
         Alert.alert(
           ALERT,
@@ -158,6 +158,6 @@ class StatefulMap extends Component {
 }
 
 const mapStateToProps = ({ auth }) => ({ auth });
-const mapDispatchToProps = { fetchPOIs, clearPOIs };
+const mapDispatchToProps = { setPOIs, addPOIs, clearPOIs };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withGeolocation(StatefulMap));
