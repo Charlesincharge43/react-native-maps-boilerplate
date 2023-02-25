@@ -1,35 +1,26 @@
 {
-  "name": "react-native-maps-boilerplate",
-  "version": "0.1.0",
-  "private": true,
-  "devDependencies": {
-    "jest-expo": "~27.0.0",
-    "react-native-scripts": "1.14.0",
-    "react-test-renderer": "16.3.1"
-  },
-  "author": "Charles Long",
-  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Charlesincharge43/react-native-maps-boilerplate.git"
-  },
+  "name": "awesomeproject",
+  "version": "1.0.0",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "react-native-scripts start",
-    "eject": "react-native-scripts eject",
-    "android": "react-native-scripts android",
-    "ios": "react-native-scripts ios",
-    "test": "jest"
-  },
-  "jest": {
-    "preset": "jest-expo"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
   },
   "dependencies": {
-    "axios-mock-adapter": "^1.15.0",
-    "expo": "^27.0.1",
-    "react": "16.3.1",
-    "react-native": "~0.55.2",
-    "react-navigation": "^2.3.1",
-    "react-redux": "^5.0.7",
-    "redux-thunk": "^2.3.0"
-  }
+    "expo": "~48.0.4",
+    "expo-status-bar": "~1.4.4",
+    "react": "18.2.0",
+    "react-native": "0.71.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@tsconfig/react-native": "^2.0.3",
+    "@types/jest": "^29.4.0",
+    "@types/react": "^18.0.28",
+    "@types/react-test-renderer": "^18.0.0",
+    "typescript": "^4.9.5"
+  },
+  "private": true
 }
