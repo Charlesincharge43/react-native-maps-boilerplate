@@ -13,7 +13,7 @@ type IProps = {
   errorMessage: string;
 }
 
-const SideMenu = (props: IProps) => 
+const Login = (props: IProps) => 
 <View style={styles.container}>
   <Text>USERNAME</Text>
   <TextInput style={styles.textInput} onChangeText={props.handleChangeUsername}/>
@@ -23,4 +23,4 @@ const SideMenu = (props: IProps) =>
   <Text style={styles.colorRed}>{props.errorMessage}</Text>
 </View>
 
-export default SideMenu;
+export default Login;
